@@ -24,19 +24,21 @@
     
 	<link rel="stylesheet" href="${contextPath}/resources/css/main.css" type="text/css"/>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </head>
 <body>
     <div class="container">
         <section class="login" >
-            <img src="${contextPath}/resources/images/main/logo.png" alt"">
+            <img src="${contextPath}/resources/images/main/logo.png">
 
-            <form action="">
+            <form action="member/memberList" method="POST" onsubmit="return loginValidate();">
                 <div class="input-fidle">
-                    <input type="text" placeholder=" 아이디를 입력해주세요."  style="height: 25px;margin:10px 0px 10px 0px;"/>
+                    <input type="text" placeholder=" 아이디를 입력해주세요." id="memberId"  name="memberId" style="height: 25px; margin:10px 0px 10px 0px;"/>
                 </div>
                 <div class="input-fidle">
-                    <input type="password" placeholder=" 비밀번호를 입력해주세요."style="height: 25px;margin:0px 0px 5px 0px;"/>
+                    <input type="password" placeholder=" 비밀번호를 입력해주세요." id="memberPw" name="memberPw" style="height: 25px; margin:0px 0px 5px 0px;"/>
                 </div>
                 <div class="button-field">
                     <input type="submit" value="로그인" />
@@ -44,5 +46,42 @@
             </form>
         </section>
     </div>
+    
+    <c:if test="${! empty title }" >
+	    <script>
+		    swal({
+		        "icon" : "${icon}",
+		        "title" : "${title}",
+		        "text" : "${text}"
+		     });
+	    </script>
+    </c:if>
+    <script>
+		// 로그인 수행 시 아이디/비밀번호가 작성 되었는지 확인하는 유효성 검사
+		function loginValidate() {
+
+			if ($("#memberId").val().trim().length == 0) {
+				swal({
+					"icon" : "warning",
+					"title" : "아이디를 입력해주세요"
+				}).then(function() {
+					$("#memberId").focus();
+				});
+				return false;
+			}
+
+			if ($("#memberPw").val().trim().length == 0) {
+
+				swal({
+					"icon" : "warning",
+					"title" : "비밀번호를 입력해주세요"
+				}).then(function() {
+					$("#memberPw").focus();
+				});
+
+				return false;
+			}
+		}
+	</script>
 </body>
 </html>
