@@ -103,7 +103,7 @@
                 <%--카테고리 --%>
                 <td>${board.categoryCode}</td>
                 <%-- 제목 --%>
-                <td>${board.boardTitle}</td>
+                <td><a href="#">${board.boardTitle}</a></td>
                 <%-- 구이름(장소) --%>
                 <td>${board.boardPlace}</td>
                 <%--금액(페이) --%>
