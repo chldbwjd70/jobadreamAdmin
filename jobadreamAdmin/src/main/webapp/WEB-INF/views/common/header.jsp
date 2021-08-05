@@ -13,14 +13,7 @@
 	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
 	crossorigin="anonymous">
 
-<!-- 제이쿼리주소 -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
-	crossorigin="anonymous"></script>
+
 
 <!-- 나눔스퀘어 폰트적용 -->
 <link rel="stylesheet" type="text/css"
@@ -85,8 +78,8 @@ div {
 					<div class="col-md-2"></div>
 					<div class="col-md-8">
 						<div class="row">
-							<a href="#" class="header2-text col-md-3" id="hd2-1">회원관리</a> 
-							<a href="#" class="header2-text col-md-3" id="hd2-2">게시판관리</a> 
+							<a href="memberList" class="header2-text col-md-3" id="hd2-1">회원관리</a> 
+							<a href="boardList" class="header2-text col-md-3" id="hd2-2">게시판관리</a> 
 							<a href="#" class="header2-text col-md-3" id="hd3-3">1:1문의</a>
 							<a href="#" class="header2-text col-md-3" id="hd4-4">신고</a>
 						</div>
@@ -97,6 +90,13 @@ div {
 		</div>
 	</div>
 
-	
+<!-- 제이쿼리주소 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+	crossorigin="anonymous"></script>	
 </body>
 </html>

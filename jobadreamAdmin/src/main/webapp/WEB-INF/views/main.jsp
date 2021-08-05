@@ -33,7 +33,7 @@
         <section class="login" >
             <img src="${contextPath}/resources/images/main/logo.png">
 
-            <form action="member/memberList" method="POST" onsubmit="return loginValidate();">
+            <form action="member/login" method="POST" onsubmit="return loginValidate();">
                 <div class="input-fidle">
                     <input type="text" placeholder=" 아이디를 입력해주세요." id="memberId"  name="memberId" style="height: 25px; margin:10px 0px 10px 0px;"/>
                 </div>

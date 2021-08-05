@@ -16,58 +16,55 @@ public class MemberDAO {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-
-	
 	
 	/** 로그인DAO
 	 * @param memberId
 	 * @return loginMember
 	 */
 	public Member login(String memberId) {
-	
 		return sqlSession.selectOne("memberMapper.login",memberId);
 	}
 
 
-
+	/** 회원 수 조회(페이징네이션)
+	 * @return
+	 */
 	public Pagination getListCount() {
 		return sqlSession.selectOne("memberMapper.getListCount");
 	}
-
-
-
-	/** 조회리스트
-	 * @param st
-	 * @return
-	 */
-	public Pagination getSearchListCount(String st) {
-		return sqlSession.selectOne("memberMapper.getSearchListCount",st);
-	}
-
-
-
-	/** 리스트 불러오기
+	
+	
+	/** 회원 목록 조회
 	 * @param pagination
 	 * @return
 	 */
-	public List<Member> selectMemberList(Pagination pagination) {
-		int offset = (pagination.getCurrentPage() -1)* pagination.getLimit();	
-		
-		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
-		return sqlSession.selectList("memberMapper.selectMemberList",rowBounds);
-	}
+	public List<Member> memberList(Pagination pagination) {
+		// RowBounds사용
+		int offset = (pagination.getCurrentPage() - 1)*pagination.getLimit();
+		RowBounds rowBouns = new RowBounds(offset, pagination.getLimit());
+		return sqlSession.selectList("memberMapper.memberList", pagination, rowBouns);
 
-
-
-	public List<Member> selectSearchList(String st, Pagination pagination) {
-		int offset = (pagination.getCurrentPage() -1)* pagination.getLimit();	
-		
-		RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
-		
-		return sqlSession.selectList("memberMapper.selectSearchList", st, rowBounds);
 	}
 	
-	
+	//페이징처리(상태필터)
+	public Pagination getSearchListCount(String st) {
+		   
+	      return sqlSession.selectOne("memberMapper.getSearchListCount",st);
+	   }
+	   
+	// memberList불러오기
+	   public List<Member> selectSearchList(String st, Pagination pagination) {
+	      int offset = (pagination.getCurrentPage() -1)* pagination.getLimit();   
+	      RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
+	      return sqlSession.selectList("memberMapper.selectSearchList", st, rowBounds);
+	   }
+
+	   // 상태변경하기
+	   public int updateStatus(Member member){
+		  return sqlSession.update("memberMapper.updateStatus", member);
+		}
+
+
 	
 	
 	

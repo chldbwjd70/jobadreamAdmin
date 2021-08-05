@@ -47,32 +47,48 @@ public class MemberServiceImpl implements MemberService{
 		return loginMember;
 	}
 
+	//페이징 
 	@Override
 	public Pagination getPagination(Pagination pg) {
+		
 		Pagination selectPg = dao.getListCount();
 		
-		return new Pagination(pg.getCurrentPage(),selectPg.getListCount());
-	}
-
-	@Override
-	public Pagination getPagination(String st, Pagination pg) {
-		// TODO Auto-generated method stub
-		Pagination selectPg = dao.getSearchListCount(st);
-		//2)계산이 완료된 Pagination 객체 생성 후 반환
+		System.out.println("selectPg :" + selectPg);
+		
 		return new Pagination(pg.getCurrentPage(), selectPg.getListCount());
 	}
 
+	// 회원 조회 
 	@Override
-	public List<Member> selectMemberList(Pagination pagination) {
-		return dao.selectMemberList(pagination);
+	public List<Member> memberList(Pagination pagination) {
+		return dao.memberList(pagination);
 	}
-
-	@Override
-	public List<Member> selectMemberList(String st, Pagination pagination) {
-		return dao.selectSearchList(st,pagination);
-	}
-
 	
+	//
+	//페이징처리(상태필터)
+	   @Override
+	   public Pagination getPagination(String st, Pagination pg) {
+	      Pagination selectPg = dao.getSearchListCount(st);
+	      return new Pagination(pg.getCurrentPage(),
+	            selectPg.getListCount() );
+	      
+	   }
+	// memberList불러오기
+	   @Override
+	   public List<Member> selectMemberList(String st, Pagination pagination) {
+	      
+	      return dao.selectSearchList(st,pagination);
+	   }
+	 // 상태변경하기
+	@Override
+	public int updateStatus(int no, String st) {
+		
+		Member member = new Member();
+		member.setMemberStatus(st);
+		member.setMemberNo(no);
+		return dao.updateStatus(member);
+	}
+
 	
 	
 	
