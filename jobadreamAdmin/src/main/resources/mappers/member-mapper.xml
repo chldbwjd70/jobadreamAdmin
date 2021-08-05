@@ -30,26 +30,45 @@
 		WHERE MEMBER_STATUS='Y'
 		AND MEMBER_ID = #{memberId}
 	</select>
-
-	<!--회원리스트  -->
-
-	<select id="getListCount" resultMap="pg_rm"> 
-		SELECT COUNT(*) CNT FROM MEMBER
-	</select>
 	
-	<select id="getSearchListCount" parameterType="string" resultMap="pg_rm"> 
-		SELECT COUNT(*) CNT FROM MEMBER
-		WHERE MEMBER_STATUS = #{st} 
-	</select>
-	
- 	<select id="selectMemberList" resultMap="member_rm">
-		SELECT * FROM MEMBER
-		ORDER BY MEMBER_NO DESC
-	</select>
-		
-	<select id="selectSearchList" parameterType="string" resultMap="member_rm">
-	 	SELECT * FROM MEMBER
-	 	WHERE MEMBER_STATUS = #{st} 
-		ORDER BY MEMBER_NO DESC
-	</select>
+	<!-- 전체게시글수 조회  -->
+  <select id="getListCount" resultMap="pg_rm">
+  	SELECT COUNT(*) CNT
+  	FROM MEMBER
+  	WHERE MEMBER_GRADE = 'G'
+  
+  </select>
+  
+  <!-- 회원 목록 조회  -->
+  <select id="memberList" parameterType="Pagination" resultMap="member_rm">
+  	SELECT MEMBER_NO, MEMBER_ID, MEMBER_NM, MEMBER_EMAIL, ENROLL_DATE, MEMBER_POINT, MEMBER_STATUS 
+		FROM MEMBER
+		WHERE MEMBER_GRADE = 'G'
+	ORDER BY MEMBER_NO DESC
+  </select>
+
+	<!-- 페이징처리(상태필터) -->
+	<select id="getSearchListCount" parameterType="string" resultMap="pg_rm">
+       SELECT COUNT(*) CNT FROM MEMBER
+         WHERE MEMBER_STATUS = #{st}
+         AND MEMBER_GRADE = 'G'         
+         ORDER BY MEMBER_NO DESC
+
+    </select>
+   
+    <!-- memberList불러오기 -->
+       <select id="selectSearchList" parameterType="string" resultMap="member_rm">
+          SELECT * FROM MEMBER
+         WHERE MEMBER_STATUS = #{st}
+         AND MEMBER_GRADE = 'G'         
+         ORDER BY MEMBER_NO DESC
+    </select>
+    
+    <!-- 상태변경 -->
+	<update id="updateStatus" parameterType="Member">
+		UPDATE MEMBER SET 
+		MEMBER_STATUS=#{memberStatus}
+		WHERE MEMBER_NO=#{memberNo}
+	</update>
+
 </mapper>

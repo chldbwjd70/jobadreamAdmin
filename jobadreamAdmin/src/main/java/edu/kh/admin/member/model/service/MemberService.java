@@ -14,10 +14,33 @@ public interface MemberService {
 	 */
 	Member login(Member inputMember);
 
+	
+	/** 페이징 처리
+	 * @param pg
+	 * @return
+	 */
 	Pagination getPagination(Pagination pg);
+
+	
+	/** 회원 조회
+	 * @param pagination
+	 * @return
+	 */
+	List<Member> memberList(Pagination pagination);
+
+
+	
+	//페이징처리(상태필터)
 	Pagination getPagination(String st, Pagination pg);
 	
-	List<Member> selectMemberList(Pagination pagination);
-	List<Member> selectMemberList(String st, Pagination pg);
+	// memberList불러오기
+	List<Member> selectMemberList(String st, Pagination pagination);
+
+	// 상태변경하기
+	int updateStatus(int no, String st);
+	
+	
+	
+	
 
 }

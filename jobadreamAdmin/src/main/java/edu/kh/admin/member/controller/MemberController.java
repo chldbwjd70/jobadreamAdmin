@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -19,7 +20,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import edu.kh.admin.member.model.service.MemberService;
 import edu.kh.admin.member.model.vo.Member;
 import edu.kh.admin.member.model.vo.Pagination;
-
 
 @Controller
 @RequestMapping("/member/*")
@@ -30,15 +30,12 @@ public class MemberController {
 	private MemberService service;
 
 	// 로그인
-	@RequestMapping(value="memberList",method=RequestMethod.POST)
+	@RequestMapping(value="login",method=RequestMethod.POST)
 	public String login(Member inputMember,Model model,
 						HttpServletRequest request,HttpServletResponse response,
 						RedirectAttributes ra ) {
 		
 		Member loginMember = service.login(inputMember);
-		
-		System.out.println(loginMember);
-		System.out.println(inputMember);
 		
 		String path = null;
 		
@@ -48,7 +45,7 @@ public class MemberController {
 				
 				model.addAttribute("loginMember", loginMember); 
 				
-				path = "member/memberList";
+				path = "redirect:/member/memberList";
 				
 			}else {
 				ra.addFlashAttribute("icon", "error");
@@ -84,39 +81,50 @@ public class MemberController {
 	}
 	
 	
-	
+	// memberList불러오기
 	@RequestMapping(value="memberList", method=RequestMethod.GET)
 	public String memberList(
 			@RequestParam(value="cp",required=false,defaultValue= "1")int cp,
-			@RequestParam(value="st",required=false,defaultValue= "")String st,
+			@RequestParam(value="st",required=false,defaultValue= "")String st ,
 			Model model, Pagination pg) {
 		
 		pg.setCurrentPage(cp); 
-		
 		Pagination pagination = null;
 		List<Member> memberList = null;
 		
-		System.out.println("Hello");
-		if(st.isEmpty()) {
+		if(st.isEmpty()){
+			
 			pagination = service.getPagination(pg);
-			memberList = service.selectMemberList(pagination);
-			System.out.println(memberList);
+			
+			memberList = service.memberList(pagination);
 			
 		} else {
 			
-			pagination = service.getPagination(st,pg); 
+			pagination = service.getPagination(st,pg);
 			
 			memberList = service.selectMemberList(st,pagination);
-			System.out.println(memberList);
 		}
+
+		
+		System.out.println("과연 될것인가 : " + memberList );
 		
 		model.addAttribute("memberList",memberList);
 		model.addAttribute("pagination",pagination);
+		model.addAttribute("status", st);
+		
 		
 		return "member/memberList";
 	}
 	
-	
+	// 상태변경하기
+	@ResponseBody
+	@RequestMapping(value="updateStatus", method=RequestMethod.POST)
+	public int updateStatus(
+			@RequestParam(value="no",required=false)int no,
+			@RequestParam(value="st",required=false,defaultValue= "")String st) {
+		int result = service.updateStatus(no, st);
+		return result;
+	}
 	
 	
 	

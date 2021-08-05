@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,40 +11,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <!--부트스트랩 -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
-      crossorigin="anonymous"
-    />
-
-    <!-- 제이쿼리주소 -->
-    <script
-      src="https://code.jquery.com/jquery-3.6.0.min.js"
-      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
-      crossorigin="anonymous"
-    ></script>
-
-    <!-- 나눔스퀘어 폰트적용 -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css"
-    />
     <style>
-      div {
-        box-sizing: border-box;
-      }
       /* 섹션1 */
       .content {
         width: 90%;
-        height: 830px;
         margin: auto;
         margin-top: 20px;
       }
@@ -71,7 +40,6 @@
       }
       .body-list {
         width: 100%;
-        height: 650px;
         text-align: center;
       }
       .btn {
@@ -88,6 +56,8 @@
     </style>
   </head>
   <body>
+<c:set var="pageURL" value="memberList"  />
+<c:set var="searchStr" value="${category }&st=${st}"  />
     <div class="container">
       <div class="content">
         <div class="member" id="mb">
@@ -97,18 +67,21 @@
               type="button"
               class="btn btn-primary dropdown-toggle"
               data-toggle="dropdown"
+              id="mlist-dropdown"
               aria-haspopup="true"
               aria-expanded="false"
             >
               조회
             </button>
-            <div class="dropdown-menu line-height-normal">
-              <a class="dropdown-item" href="#">전체회원</a>
-              <a class="dropdown-item" href="#">가입회원</a>
-              <a class="dropdown-item" href="#">정지회원</a>
-              <a class="dropdown-item" href="#">탈퇴회원</a>
+            <div class="dropdown-menu line-height-normal" aria-labelledby="mlist-dropdown">
+              <a class="dropdown-item" href="${pageURL}">전체회원</a>
+              <a class="dropdown-item" href="${pageURL}?st=Y">가입회원</a>
+              <a class="dropdown-item" href="${pageURL}?st=S">정지회원</a>
+              <a class="dropdown-item" href="${pageURL}?st=N">탈퇴회원</a>
             </div>
-          </div>
+          </div> 
+          
+
         </div>
         <!-- 목록리스트 시작 -->
         <div class="body-list" id="by-l">
@@ -126,7 +99,7 @@
               </tr>
             </thead>
             <tbody>
-         <%--    <c:forEach items="${memberList}" var="member"> --%>
+             <c:forEach items="${memberList}" var="member"> 
 	              <tr>	<%-- 넘버 --%>
 		                <td scope="row"> ${member.memberNo} </td>
 		                
@@ -143,20 +116,22 @@
 		                <%--회원상태 --%>
 		                <td>${member.memberStatus}</td>
 		                <%--상태변경--%>
-		                <td><a href="#" class="btn btn-primary btn-sm" onclick="updteStatus(${member.memberNo}, this);">정지</a></td>
-
-	              
-	              
+		                <td>
+           					<c:if test="${member.memberStatus == 'Y'}">
+								<a href="#" class="btn btn-danger btn-sm" onclick="updateStatus(${member.memberNo}, 'N');">정지</a>
+							</c:if>
+	                		<c:if test="${member.memberStatus != 'Y'}">
+								<a href="#" class="btn btn-primary btn-sm" onclick="updateStatus(${member.memberNo}, 'Y');">복구</a>
+							</c:if>
+		                </td>
 	              </tr>
-        	<%-- </c:forEach> --%>
+        	</c:forEach>
             </tbody>
           </table>
         </div>
         <!-- 목록리스트 끝 -->
      <%---------------------- Pagination start----------------------%>
 			<%-- 페이징 처리 시 주소를 쉽게 작성할 수 있도록 필요한 변수를 미리 선언 --%>
-			
-			<c:set var="pageURL" value="list"  />
 			
 			<c:set var="prev" value="${pageURL}?cp=${pagination.prevPage}${searchStr}" />
 			<c:set var="next" value="${pageURL}?cp=${pagination.nextPage}${searchStr}" />
@@ -175,8 +150,6 @@
 						<li><a class="page-link" href="${pageURL}?cp=${pagination.currentPage - 1}${searchStr}">&lt;</a></li>
 					</c:if>
 					
-					
-				
 					<%-- 페이지 목록 --%>
 					<c:forEach var="p" begin="${pagination.startPage}" end="${pagination.endPage}">
 						
@@ -207,5 +180,19 @@
 		
       </div>
     </div>
+  <script>
+	function updateStatus(no, status){
+		$.ajax({
+			url : "/admin/member/updateStatus",
+			data: {no: no, st: status},
+			type: "post",
+			success: function(){
+				location.reload();
+			}
+		});
+	}
+  
+  </script>
+  
   </body>
 </html>
