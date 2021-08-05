@@ -1,5 +1,5 @@
 package edu.kh.admin.member.model.vo;
-
+ 
 public class Pagination {
 
 	private int currentPage;		// 목록상 현재 페이지 *
