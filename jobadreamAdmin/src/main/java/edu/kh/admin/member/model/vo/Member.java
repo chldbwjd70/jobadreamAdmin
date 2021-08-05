@@ -1,7 +1,7 @@
 package edu.kh.admin.member.model.vo;
 
 import java.sql.Date;
-
+    
 public class Member {
 
 	private int memberNo;
