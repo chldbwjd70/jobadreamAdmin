@@ -118,10 +118,16 @@
 		                <%--상태변경--%>
 		                <td>
            					<c:if test="${member.memberStatus == 'Y'}">
-								<a href="#" class="btn btn-danger btn-sm" onclick="updateStatus(${member.memberNo}, 'N');">정지</a>
+								<button type="button" class="btn btn-danger btn-sm" onclick="updateStatus(${member.memberNo}, 'S');">정지</button>
+							</c:if>
+							<c:if test="${member.memberStatus == 'N'}">
+								<button type="button" class="btn btn-danger btn-sm" onclick="updateStatus(${member.memberNo}, 'S');">정지</button>
+							</c:if>
+								<c:if test="${member.memberStatus == 'S'}">
+								<button type="button" class="btn btn-danger btn-sm" onclick="updateStatus(${member.memberNo}, 'N');">탈퇴</button>
 							</c:if>
 	                		<c:if test="${member.memberStatus != 'Y'}">
-								<a href="#" class="btn btn-primary btn-sm" onclick="updateStatus(${member.memberNo}, 'Y');">복구</a>
+								<button type="button"  class="btn btn-primary btn-sm" onclick="updateStatus(${member.memberNo}, 'Y');">복구</button>
 							</c:if>
 		                </td>
 	              </tr>

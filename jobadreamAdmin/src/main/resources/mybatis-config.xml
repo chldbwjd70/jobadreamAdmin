@@ -14,11 +14,20 @@
 		
 		<typeAlias type="edu.kh.admin.board.model.vo.Board" alias="Board" /> 
 		<typeAlias type="edu.kh.admin.board.model.vo.Pagination" alias="BoardPagination" /> 
+		
+		<typeAlias type="edu.kh.admin.qusetions.model.vo.Qusetions" alias="Qusetions" /> 
+		<typeAlias type="edu.kh.admin.qusetions.model.vo.Pagination" alias="qusetionsPagination" />
+		
+
+		<typeAlias type="edu.kh.admin.qusetions.model.vo.Reply" alias = "Reply"/>	 
+		
 	</typeAliases>
 	
 	<!-- mapper -->
 	<mappers>
-		<mapper resource="/mappers/member-mapper.xml" />
-	    <mapper resource="/mappers/board-mapper.xml" />
+	   <mapper resource="/mappers/member-mapper.xml" />
+	   <mapper resource="/mappers/board-mapper.xml" />
+	   <mapper resource="/mappers/qusetions-mapper.xml" /> 
+	   <mapper resource="/mappers/reply-mapper.xml"/>
 	</mappers>
 </configuration>

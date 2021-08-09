@@ -2,13 +2,15 @@ package edu.kh.admin.board.model.dao;
 
 import java.util.List;
 
+
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import edu.kh.admin.board.model.vo.Board;
 import edu.kh.admin.board.model.vo.Pagination;
-
+@Repository
 public class BoardDAO {
 
 	@Autowired
@@ -35,6 +37,14 @@ public class BoardDAO {
 		int offset = (pagination.getCurrentPage() -1)* pagination.getLimit();   
 	    RowBounds rowBounds = new RowBounds(offset, pagination.getLimit());
 	    return sqlSession.selectList("boardMapper.selectSearchList", st, rowBounds);
+	}
+	
+	
+	
+	// 게시글 상세조회
+	public Board selectBoard(int boardNo) {
+		
+		return sqlSession.selectOne("boardMapper.selectBoard",boardNo);
 	}
 	
 

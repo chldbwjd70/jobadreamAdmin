@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <jsp:include page="../common/header.jsp" />
@@ -11,18 +12,18 @@
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Document</title>
+<title>1:1문의 목록</title>
 
 <style>
 
 /* 섹션1 */
 .content {
-	width: 90%;
+	width: 1000px;
 	margin: auto;
 	margin-top: 20px;
 }
 
-.board {
+.questions {
 	width: 100%;
 	height: 100px;
 	font-size: 40px;
@@ -46,6 +47,7 @@
 
 .body-list {
 	width: 100%;
+	height: 650px;
 	text-align: center;
 }
 
@@ -64,25 +66,12 @@
 </style>
 </head>
 <body>
-	<c:set var="pageURL" value="boardList" />
-	<c:set var="searchStr" value="${category }&st=${st}" />
+
 	<div class="container">
 		<div class="content">
-			<div class="board" id="no-b">
-				게시판 리스트
-				<div class="btn-group">
-					<button type="button" class="btn btn-primary dropdown-toggle"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						조회</button>
-					<div class="dropdown-menu line-height-normal">
-						<a class="dropdown-item" href="${pageURL}">전체보기</a> 
-						<a class="dropdown-item" href="${pageURL}?st=1">가게알바</a> 
-						<a class="dropdown-item" href="${pageURL}?st=2">돌봄산책</a> 
-						<a class="dropdown-item" href="${pageURL}?st=3">청소/심부름</a> 
-						<a class="dropdown-item" href="${pageURL}?st=4">배달알바</a> 
-						<a class="dropdown-item" href="${pageURL}?st=5">기타</a>
-					</div>
-				</div>
+			<div class="questions" id="no-b">
+				1:1문의
+				<div class="btn-group"></div>
 			</div>
 			<!-- 목록리스트 시작 -->
 			<div class="body-list" id="by-l">
@@ -90,58 +79,53 @@
 					<thead>
 						<tr>
 							<th scope="col">N0.</th>
-							<th scope="col">카테고리</th>
 							<th scope="col">제목</th>
-							<th scope="col">구이름</th>
-							<th scope="col">포인트</th>
 							<th scope="col">작성자</th>
-							<th scope="col">상태</th>
 							<th scope="col">작성일</th>
+							<th scope="col">답변여부</th>
+							<th scope="col">상세보기</th>
 						</tr>
 					</thead>
 					<tbody>
-
-					
-							<c:forEach items="${boardList}" var="board">
-								<c:set var="place" value="${fn:split(board.boardPlace, ',') }" />
-								<c:set var="guPlace" value="${fn:split(place[1], ' ')}" />
-							<tr>
-									<%-- 넘버 --%>
-									<th scope="row">${board.boardNo}</th>
-									<%--카테고리 --%>
-									<td>${board.categoryTitle}</td>
-									<%-- 제목 --%>
-									<td><a href="${board.boardNo}">${board.boardTitle}</a></td>
-									<%-- 구이름(장소) --%>
-									<td>${guPlace[1]}</td>
-
-
-									<%--금액(페이) --%>
-									<td>${board.boardPay}</td>
-									<%--이름 --%>
-									<td>${board.memberName}</td>
-									<%--게시글상태 --%>
-									<td>${board.boardStatus}</td>
-									<%-- 작성일--%>
-									<td>
-										<fmt:formatDate var="createDate"
-											value="${board.createDate}" pattern="yyyy-MM-dd" /> 
-										<fmt:formatDate
-											var="today" value="<%=new java.util.Date()%>"
-											pattern="yyyy-MM-dd" /> 
-										<c:choose>
-											<c:when test="${createDate != today}">
-												${createDate}
-											</c:when>
-	
-											<c:otherwise>
-												<fmt:formatDate value="${board.createDate}" pattern="HH:mm" />
-											</c:otherwise>
-										</c:choose>
-									</td>
+						<c:choose>
+							<%-- 조회된 게시글 목록이 없는 경우 --%>
+							<c:when test="${empty qusetionsList}">
+								<tr>
+									<td colspan="6">게시글이 존재하지 않습니다.</td>
 								</tr>
-							</c:forEach>
-		
+							</c:when>
+							<%-- 조회된 게시글 목록이 있을 경우 --%>
+							<c:otherwise>
+								<c:forEach items="${qusetionsList}" var="qusetions">
+									<tr>
+										<%-- no.--%>
+										<th scope="row">${qusetions.qusetionsNo}</th>
+										<%-- 제목--%>
+										<td>${qusetions.qusetionsTitle}</td>
+										<%--아이디 --%>
+										<td>${qusetions.memberId}</td>
+										<%--작성일 --%>
+										<td><fmt:formatDate var="qusetionsDt" value="${qusetions.qusetionsDt}" pattern="yyyy-MM-dd" /> 
+												<fmt:formatDate var="today" value="<%=new java.util.Date()%>" pattern="yyyy-MM-dd" />
+											 <c:choose>
+												<%-- 글 작성일이 오늘이 아닐 경우 --%>
+												<c:when test="${qusetionsDt != today}">
+													${qusetionsDt}
+												</c:when>
+												<%-- 글 작성일이 오늘일 경우 --%>
+												<c:otherwise>
+													<fmt:formatDate value="${qusetions.qusetionsDt}" pattern="HH:mm" />
+												</c:otherwise>
+											</c:choose>
+										</td>
+										<td>${qusetions.qusetionsReplyStatus}</td>
+										<%--상세보기 --%>
+										<td><a href="${contextPath}/qusetions/qusetionView/${qusetions.qusetionsNo}" class="btn btn-primary btn-sm">상세보기</a></td>
+									</tr>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+						<%--처리여부 --%>
 					</tbody>
 				</table>
 			</div>
@@ -204,7 +188,6 @@
 				</ul>
 			</div>
 			<%---------------------- Pagination end----------------------%>
-
 		</div>
 	</div>
 </body>

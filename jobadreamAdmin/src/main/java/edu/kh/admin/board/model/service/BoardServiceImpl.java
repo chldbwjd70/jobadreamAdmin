@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import edu.kh.admin.board.model.dao.BoardDAO;
 import edu.kh.admin.board.model.vo.Board;
 import edu.kh.admin.board.model.vo.Pagination;
 
-
+@Service
 public class BoardServiceImpl implements BoardService{
 	
 	@Autowired
@@ -45,6 +46,26 @@ public class BoardServiceImpl implements BoardService{
 	public List<Board> selectboardList(String st, Pagination pagination) {
 		
 		return dao.selectSearchList(st,pagination);
+	}
+	
+	
+	// 게시글 상세 조회
+	@Override
+	public Board selectBoard(int boardNo) {
+		
+		return dao.selectBoard(boardNo);
+	}
+	//크로스사이트 스크립트 방지처리
+	public static String replaceParameter(String param) {
+	      String result = param;
+	      if(param != null) {
+	         result = result.replaceAll("&", "&amp;");
+	         result = result.replaceAll("<", "&lt;");
+	         result = result.replaceAll(">", "&gt;");
+	         result = result.replaceAll("\"", "&quot;");
+	      }
+	      
+	      return result;
 	}
 
 

@@ -25,6 +25,11 @@ public interface BoardService {
 	// memberList불러오기
 	List<Board> selectboardList(String st, Pagination pagination);
 
+	
+	
+	// 게시글 상세조회
+	Board selectBoard(int boardNo);
+
 
 
 	
