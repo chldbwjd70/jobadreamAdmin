@@ -78,10 +78,10 @@ div {
 					<div class="col-md-2"></div>
 					<div class="col-md-8">
 						<div class="row">
-							<a href="memberList" class="header2-text col-md-3" id="hd2-1">회원관리</a> 
-							<a href="boardList" class="header2-text col-md-3" id="hd2-2">게시판관리</a> 
-							<a href="#" class="header2-text col-md-3" id="hd3-3">1:1문의</a>
-							<a href="#" class="header2-text col-md-3" id="hd4-4">신고</a>
+							<a href="${contextPath}/member/memberList" class="header2-text col-md-3" id="hd2-1">회원관리</a> 
+							<a href="${contextPath}/board/boardList" class="header2-text col-md-3" id="hd2-2">게시판관리</a> 
+							<a href="${contextPath}/qusetions/qusetionsList" class="header2-text col-md-3" id="hd3-3">1:1문의</a>
+							<a href="${contextPath}/report/reportList" class="header2-text col-md-3" id="hd4-4">신고</a>
 						</div>
 					</div>
 					<div class="col-md-2"></div>

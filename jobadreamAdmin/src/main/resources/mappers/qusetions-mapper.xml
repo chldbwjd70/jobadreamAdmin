@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="qusetionsMapper">
+
+<resultMap type="QusetionsPagination" id="pg_rm">
+	<result property="listCount" column="CNT" />
+</resultMap>
+
+
+<resultMap type="Qusetions" id="q_rm">
+		<id property="qusetionsNo" column="QUSETIONS_NO" />
+		<result property="qusetionsTitle" column="QUSETIONS_TITLE" />
+		<result property="qusetionsContent" column="QUSETIONS_CONTENT" />
+		<result property="qusetionsDt" column="QUSETIONS_DT" />
+		<result property="qusetionsStatus" column="QUSETIONS_STATUS" />
+		<result property="qusetionsReplyStatus"
+			column="QUSETIONS_REPLY_STATUS" />
+		<result property="qusetionsReply" column="QUSETIONS_REPLY" />
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="memberId" column="MEMBER_ID" />
+</resultMap>
+
+
+
+<!-- 1:1문의 게시글 수 조회 -->
+<select id="getListCount" resultMap="pg_rm">
+		SELECT COUNT(*) CNT
+		FROM QUSETIONS_LIST
+		WHERE QUSETIONS_STATUS = 'Y'
+</select>
+
+<!-- 1:1문의 목록조회 -->
+<select id="selectQusetionList"
+		parameterType="QusetionsPagination" resultMap="q_rm">
+SELECT QUSETIONS_NO, QUSETIONS_TITLE,MEMBER_ID,
+		QUSETIONS_DT,QUSETIONS_REPLY_STATUS
+		FROM QUSETIONS
+		JOIN MEMBER USING(MEMBER_NO)
+		ORDER BY QUSETIONS_NO DESC
+</select>
+
+
+
+
+	<!-- 1:1문의 게시글 상세조회 -->
+<select id="selectQusetions" parameterType="_int"
+		resultMap="q_rm">
+		SELECT QUSETIONS_NO, QUSETIONS_TITLE, QUSETIONS_CONTENT, MEMBER_ID,MEMBER_NO,QUSETIONS_DT,
+		QUSETIONS_CONTENT
+		FROM QUSETIONS
+		JOIN MEMBER USING(MEMBER_NO)
+		WHERE QUSETIONS_NO = #{qusetionsNo}
+		AND QUSETIONS_STATUS = 'Y'
+</select>
+
+
+
+</mapper>
