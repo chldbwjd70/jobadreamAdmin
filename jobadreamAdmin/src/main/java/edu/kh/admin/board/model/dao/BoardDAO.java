@@ -47,7 +47,9 @@ public class BoardDAO {
 		return sqlSession.selectOne("boardMapper.selectBoard",boardNo);
 	}
 	
-
-
+	//게시글 삭제
+    public int deleteBoard(int boardNo){
+        return sqlSession.update("boardMapper.deleteBoard", boardNo);
+      }
 	
 }

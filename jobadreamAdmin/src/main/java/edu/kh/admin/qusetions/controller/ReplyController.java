@@ -14,14 +14,7 @@ import com.google.gson.GsonBuilder;
 import edu.kh.admin.qusetions.model.service.ReplyService;
 import edu.kh.admin.qusetions.model.vo.Reply;
 
-
-
 @RestController
-
-
-
-
-
 @RequestMapping("/reply/*")
 @SessionAttributes({"loginMember"}) 
 public class ReplyController {

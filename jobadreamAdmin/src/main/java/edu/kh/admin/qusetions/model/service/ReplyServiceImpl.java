@@ -56,6 +56,9 @@ public class ReplyServiceImpl implements ReplyService{
 		
 		return dao.deletReply(qusetionsCommentNo);
 	}
+	
+	
+	
 	 //크로스사이트 스크립트 방지 처리
 	 public static String replaceParameter(String param) {
 	      String result = param;

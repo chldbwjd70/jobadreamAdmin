@@ -15,7 +15,6 @@
 <!-- 댓글 목록 조회 -->
 
 <select id="selectList" parameterType="_int" resultMap="reply_rm">
-	
 	SELECT QUSETIONS_COMMENT_NO,QUSETIONS_NO,QUSETIONS_COMMENT_CONTENT,QUSETIONS_COMMENT_DT, MEMBER_NO
 	FROM QUSETIONS_COMMENT
 	WHERE QUSETIONS_COMMENT_STATUS='Y'
@@ -46,8 +45,12 @@
 	QUSETIONS_COMMENT_STATUS='N'
 	WHERE QUSETIONS_COMMENT_NO=#{qusetionsCommentNo}
 </update>
-
-
+	<!--처리여부-->
+   <update id="replyQusetion" parameterType="_int">
+      UPDATE QUSETIONS SET
+      QUSETIONS_REPLY_STATUS='Y'
+      WHERE QUSETIONS_NO=#{qusetionsNo}
+   </update>
 
 
 </mapper>

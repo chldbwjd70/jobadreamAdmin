@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="reportMapper">
+
+	<resultMap type="Report" id="rp_rm">
+		<id property="reportNo" column="REPORT_NO" />
+		
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="memberId" column="MEMBER_ID" />
+		<result property="reportTitle" column="REPORT_TITLE" />
+		<result property="reportContent" column="REPORT_CONTENT" />
+		<result property="reportDt" column="REPORT_DT" />
+		<result property="reportStatus" column="REPORT_STATUS" />
+		<result property="reportReplyStatus" column="REPORT_REPLY_STATUS" />
+		<result property="reportAttachment" column="REPORT_ATTACHMENT" />
+		<result property="reportCategoryCd" column="REPORT_CATEGORY_CD" />
+		<result property="categoryTitle" column="CATEGORY_TITLE" />
+		<result property="reportCategoryTitle" column="REPORT_CATEGORY_TITLE" />
+		<result property="filePath" column="FILE_PATH" />
+		<result property="fileName" column="FILE_NAME" />
+	</resultMap>
+	
+
+	<resultMap type="ReportPagination" id="rpg_rm">
+		<result property="listCount" column="CNT" />
+	</resultMap>
+	
+		<!-- 신고 전체 게시글수 조회 -->
+	<select id="getListCount" resultMap="rpg_rm">
+		SELECT COUNT(*) CNT
+		FROM REPORT
+		WHERE REPORT_STATUS = 'Y'
+	</select>
+	
+		<!-- 신고 목록조회 -->
+	<select id="selectReportList"
+		parameterType="ReportPagination" resultMap="rp_rm">
+		SELECT REPORT_NO, REPORT_TITLE,MEMBER_ID,
+		REPORT_DT,REPORT_REPLY_STATUS
+		FROM REPORT
+		JOIN MEMBER USING(MEMBER_NO)
+		WHERE REPORT_STATUS='Y'
+		ORDER BY REPORT_NO DESC
+	</select>
+	
+	 	<!-- 페이징처리(상태필터) -->
+	<select id="getSearchListCount" parameterType="string" resultMap="rpg_rm">
+       SELECT COUNT(*) CNT 
+       FROM REPORT
+       WHERE REPORT_CATEGORY_CD = #{st}    
+       AND REPORT_STATUS = 'Y'   
+       ORDER BY REPORT_NO DESC
+
+    </select>
+	
+	
+	<!-- ReportList 불러오기 -->
+	<select id="selectSearchList"
+		parameterType="ReportPagination" resultMap="rp_rm">
+		SELECT REPORT_NO, REPORT_TITLE,MEMBER_ID,
+		REPORT_DT,REPORT_REPLY_STATUS
+		FROM REPORT
+		JOIN MEMBER USING(MEMBER_NO)
+		WHERE REPORT_CATEGORY_CD = #{st} 
+		AND REPORT_STATUS = 'Y'
+		ORDER BY REPORT_NO DESC
+	</select>
+	
+	
+	 	<!-- 게시글 상세조회 -->
+ 	<select id="selectReport" parameterType="_int" resultMap="rp_rm">
+ 		SELECT REPORT_NO,CATEGORY_TITLE,MEMBER_ID,REPORT_TITLE,
+		REPORT_DT,REPORT_CONTENT,FILE_PATH,FILE_NAME
+		FROM REPORT
+		JOIN CATEGORY ON REPORT.REPORT_CATEGORY_CD = CATEGORY.CATEGORY_CD
+		JOIN MEMBER USING(MEMBER_NO)
+		LEFT JOIN REPORT_FILE USING(REPORT_NO)
+		WHERE REPORT_NO = #{reportNo}
+		AND REPORT_STATUS = 'Y'
+ 		
+ 	</select>
+		<!-- 신고처리확인 -->
+	   <update id="checkReport" parameterType="_int">
+      UPDATE REPORT SET
+      REPORT_REPLY_STATUS ='Y'
+      WHERE REPORT_NO=#{reportNo}
+   </update>
+	
+	
+	
+</mapper>
