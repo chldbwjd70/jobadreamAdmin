@@ -21,6 +21,9 @@
 
 		<typeAlias type="edu.kh.admin.qusetions.model.vo.Reply" alias = "Reply"/>	 
 		
+		<typeAlias type="edu.kh.admin.report.model.vo.Report" alias="Report" /> 
+		<typeAlias type="edu.kh.admin.report.model.vo.Pagination" alias="ReportPagination" /> 
+		
 	</typeAliases>
 	
 	<!-- mapper -->
@@ -29,5 +32,6 @@
 	   <mapper resource="/mappers/board-mapper.xml" />
 	   <mapper resource="/mappers/qusetions-mapper.xml" /> 
 	   <mapper resource="/mappers/reply-mapper.xml"/>
+	   <mapper resource="/mappers/report-mapper.xml"/>
 	</mappers>
 </configuration>

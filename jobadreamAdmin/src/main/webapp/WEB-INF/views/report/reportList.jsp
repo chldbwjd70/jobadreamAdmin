@@ -17,7 +17,7 @@
 
       /* 섹션1 */
       .content {
-        width: 1200px;
+        width: 1000px;
      
         margin: auto;
         margin-top: 20px;
@@ -61,7 +61,8 @@
     </style>
   </head>
   <body>
-    <div class="container">
+    <c:set var="pageURL" value="reportList" />
+	<c:set var="searchStr" value="${category }&st=${st}" />
       <div class="content">
         <div class="report" id="rp">
           신고
@@ -69,13 +70,13 @@
             <nav aria-label="...">
               <ul class="pagination pagination-sm">
                 <li class="page-item active" aria-current="page">
-                  <span class="page-link">게시판</span>
+                  <a class="page-link"  href="${pageURL}?st=1">게시판</a>
                 </li>
                 <li class="page-item">
-                  <a class="page-link" href="#">채팅</a>
+                  <a class="page-link" href="${pageURL}?st=2">채팅</a>
                 </li>
                 <li class="page-item">
-                  <a class="page-link" href="#">이용내역</a>
+                  <a class="page-link" href="${pageURL}?st=3">이용내역</a>
                 </li>
               </ul>
             </nav>
@@ -95,14 +96,33 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>부적절한글 신고합니다!!!</td>
-                <td>최유정</td>
-                <td>2021-07-24</td>
-                <td>N</td>
-                <td><a href="#" class="btn btn-primary btn-sm">상세보기</a></td>
-              </tr>
+            <c:forEach items="${reportList}" var="report">
+            <tr>
+                    <%-- no--%>
+                   <th scope="row">${report.reportNo}</th>
+                   <%-- 제목--%>
+                   <td> ${report.reportTitle}</td>
+                   <%-- 아이디--%>
+                   <td>${report.memberId}</td>
+                   <%--작성일--%>
+                   <td><fmt:formatDate var="createDate" value="${report.reportDt}"
+                     pattern="yyyy-MM-dd" />
+                  <fmt:formatDate var="today" value="<%=new java.util.Date()%>"
+                     pattern="yyyy-MM-dd" />
+                  <c:choose>
+                     <c:when test="${createDate != today}">
+                                       ${createDate}
+                     </c:when>
+                     <c:otherwise>
+                        <fmt:formatDate value="${report.reportDt}" pattern="HH:mm" />
+                     </c:otherwise>
+                  </c:choose></td>
+                   <%--처리여부 --%>
+                   <td>${report.reportReplyStatus}</td>
+                   <%--상세보기 --%>
+                   <td><a href="${contextPath}/report/reportView/${report.reportNo}" class="btn btn-primary btn-sm">상세보기</a></td>
+                 </tr>
+            </c:forEach>
            
             </tbody>
           </table>

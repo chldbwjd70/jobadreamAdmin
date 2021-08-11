@@ -25,7 +25,7 @@
 <!-- 1:1문의 게시글 수 조회 -->
 <select id="getListCount" resultMap="pg_rm">
 		SELECT COUNT(*) CNT
-		FROM QUSETIONS_LIST
+		FROM QUSETIONS
 		WHERE QUSETIONS_STATUS = 'Y'
 </select>
 
@@ -52,6 +52,8 @@ SELECT QUSETIONS_NO, QUSETIONS_TITLE,MEMBER_ID,
 		WHERE QUSETIONS_NO = #{qusetionsNo}
 		AND QUSETIONS_STATUS = 'Y'
 </select>
+
+
 
 
 

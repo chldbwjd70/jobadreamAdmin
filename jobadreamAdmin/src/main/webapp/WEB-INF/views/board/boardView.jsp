@@ -130,10 +130,27 @@
 			<div class="viewContents">${board.boardContent}</div>
 			<div class="end">
 				<a href="${contextPath}/board/boardList" class="btn btn-primary">목록으로</a>
-				<a href="#" class="btn btn-danger">삭제</a>
+				<a href="#" onclick="deleteBoard(${board.boardNo})"  class="btn btn-danger">삭제</a>
 			</div>
 		</div>
 <script>
+function deleteBoard(boardNo){
+    if(confirm("정말로 삭제하시겠습니까?")){
+          var url = "${contextPath}/board/deleteBoard";
+          
+          $.ajax({
+             url : url,
+             data : {"boardNo" : boardNo},
+             type : "post",
+             success : function(result){
+                location.href="${contextPath}/board/boardList";
+             }, error : function(){
+                console.log("ajax 통신 실패");
+             }
+          });
+       }
+}  
+
 
 </script>
 

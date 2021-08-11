@@ -20,7 +20,6 @@
 /* 섹션1 */
 .content {
 	width: 1000px;
-	height: 780px;
 	margin: 80px auto auto;
 }
 /* 게시판상세조회 박스 */

@@ -69,6 +69,14 @@ public class BoardController {
 		return "board/boardView";
 	}
 	
+	//게시글 삭제
+	   @ResponseBody
+	   @RequestMapping(value="deleteBoard", method=RequestMethod.POST)
+	   public int deleteBoard(
+	         @RequestParam(value="boardNo",required=false)int boardNo) {
+	      int result = service.deleteBoard(boardNo);
+	      return result;
+	   }
 	
 	
 	

@@ -79,6 +79,13 @@
  		
  	</select>
  	
+ 	<!-- 게시글 삭제 -->
+ 	   <update id="deleteBoard" parameterType="_int">
+      UPDATE BOARD SET
+      BOARD_STATUS ='N'
+      WHERE BOARD_NO=#{boardNo}
+   </update>
+ 	
  	
  	
  	

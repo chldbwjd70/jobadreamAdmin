@@ -67,6 +67,11 @@ public class BoardServiceImpl implements BoardService{
 	      
 	      return result;
 	}
-
-
+	//게시글 삭제
+	@Override
+	   public int deleteBoard(int boardNo) {
+	      return dao.deleteBoard(boardNo);
+	   }
+	
+	
 }

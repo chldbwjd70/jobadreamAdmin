@@ -31,7 +31,8 @@ public interface BoardService {
 	Board selectBoard(int boardNo);
 
 
-
+	//게시글 삭제
+	int deleteBoard(int boardNo);
 	
 	
 	

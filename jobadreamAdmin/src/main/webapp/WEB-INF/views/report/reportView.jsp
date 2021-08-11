@@ -6,6 +6,8 @@
 
 <!DOCTYPE html>
 <html lang="en">
+<jsp:include page="../common/header.jsp" />
+
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -16,8 +18,7 @@
 
       /* 섹션1 */
       .content {
-        width: 1200px;
-       
+        width: 1000px;
         margin: 80px auto auto;
       }
       /* 상세조회 박스 */
@@ -92,27 +93,46 @@
     </style>
   </head>
   <body>
-    <div class="container">
+   <div class="container">
       <div class="content">
         <div class="reportView">신고</div>
         <div class="onesession">
-          <div class="ss-t1">게시판</div>
+          <div class="ss-t1">${report.categoryTitle}</div>
 
-          <div class="ss-t2">부적절한 글 신고합니다..</div>
+          <div class="ss-t2">${report.reportTitle}</div>
         </div>
         <div class="twosession">
-          <div class="twosession-t1" id="two-t1">작성자 : 최유정</div>
-          <div class="twosession-t2" id="two-t2">작성일 : 2021-07-24</div>
+          <div class="twosession-t1" id="two-t1">작성자 : ${report.memberId}</div>
+          <div class="twosession-t2" id="two-t2">작성일 : <fmt:formatDate value="${report.reportDt}" pattern="yyyy-MM-dd" /></div>
         </div>
         <div class="viewContents">
-          <img src="" />
-          부적절한 글 신고합니다....
+                  <c:choose>
+         <c:when test="${report.filePath != null}">
+            <img src="${contextPath}/${report.filePath}${report.fileName}" />
+         </c:when>
+      </c:choose>
+          ${report.reportContent}
         </div>
         <div class="end">
-          <a href="adminDeclaration.htmll" class="btn btn-danger">신고확인</a>
-          <a href="adminDeclaration.html" class="btn btn-primary">이전으로</a>
+          <a href="#" onclick="checkReport(${report.reportNo})"  class="btn btn-danger">신고확인</a>
+          <a href="${contextPath}/report/reportList" class="btn btn-primary">이전으로</a>
         </div>
       </div>
     </div>
+    
+    <!--신고확인 -->
+   <script>
+   function checkReport(no){
+      $.ajax({
+         url : "/admin/report/checkReport",
+         data: {no: no},
+         type: "post",
+         success: function(){
+            location.href="/admin/report/reportList";
+         }
+      });
+   }
+  
+  </script>
   </body>
 </html>
