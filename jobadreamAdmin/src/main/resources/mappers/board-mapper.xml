@@ -76,7 +76,10 @@
 		JOIN CATEGORY USING(CATEGORY_CD)
 		JOIN MEMBER USING(MEMBER_NO)
 		WHERE BOARD_NO = #{boardNo}
+		OR BOARD_STATUS ='I'
 		AND BOARD_STATUS = 'Y'
+		
+		
  		
  	</select>
  	

@@ -70,12 +70,12 @@
             <nav aria-label="...">
               <ul class="pagination pagination-sm">
                 <li class="page-item active" aria-current="page">
-                  <a class="page-link"  href="${pageURL}?st=1">게시판</a>
+                  <a  class="page-link"  href="${pageURL}?st=1">게시판</a>
                 </li>
-                <li class="page-item">
+                <li class="page-item ">
                   <a class="page-link" href="${pageURL}?st=2">채팅</a>
                 </li>
-                <li class="page-item">
+                <li class="page-item ">
                   <a class="page-link" href="${pageURL}?st=3">이용내역</a>
                 </li>
               </ul>
@@ -128,7 +128,7 @@
           </table>
         </div>
         <!-- 목록리스트 끝 -->
-        <%---------------------- Pagination start----------------------%>
+      <%---------------------- Pagination start----------------------%>
 			<%-- 페이징 처리 시 주소를 쉽게 작성할 수 있도록 필요한 변수를 미리 선언 --%>
 
 
