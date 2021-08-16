@@ -16,7 +16,9 @@
         <!--부트스트랩 -->
 
         <style>
-  
+  			.dsf{
+  				display: none;
+  			}
      
             #area {
                 min-width: 50%;
@@ -97,12 +99,16 @@
                <c:if test="${reply.memberNo == loginMember.memberNo}">
                   <div class="replyBtnArea">
                      <button class="btn btn-primary btn-sm ml-1" id="updateReply" onclick="showUpdateReply(${reply.qusetionsNo}, this)">수정</button>
-                     <button class="btn btn-danger btn-sm ml-1" id="deleteReply" onclick="deleteReply(${reply.qusetionsNo})">삭제</button>
+                     <%-- <button class="btn btn-danger btn-sm ml-1" id="deleteReply" onclick="deleteReply(${reply.qusetionsNo})">삭제</button> --%>
                   </div>
                </c:if>
             </li>
          </c:forEach>
       </ul>
+      
+      
+      
+      <br> <br> <br>
    </div>
 
         <script>
@@ -206,7 +212,7 @@
                          
                          // ** 추가되는 댓글에 onclick 이벤트를 부여하여 버튼 클릭 시 수정, 삭제를 수행할 수 있는 함수를 이벤트 핸들러로 추가함. 
                          var showUpdate = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("수정").attr("onclick", "showUpdateReply("+item.qusetionsCommentNo+", this)");
-                         var deleteReply = $("<button>").addClass("btn btn-primary btn-sm ml-1").text("삭제").attr("onclick", "deleteReply("+item.qusetionsCommentNo+")");
+                         var deleteReply = $("<button>").addClass("btn btn-primary btn-sm ml-1 dsf").text("삭제").attr("onclick", "deleteReply("+item.qusetionsCommentNo+")");
                          
                          replyBtnArea.append(showUpdate).append(deleteReply);
                       }
