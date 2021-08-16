@@ -97,8 +97,7 @@
       <div class="content">
         <div class="reportView">신고</div>
         <div class="onesession">
-          <div class="ss-t1">${report.categoryTitle}</div>
-
+          <div class="ss-t1">${report.reportCategoryTitle}</div>
           <div class="ss-t2">${report.reportTitle}</div>
         </div>
         <div class="twosession">
