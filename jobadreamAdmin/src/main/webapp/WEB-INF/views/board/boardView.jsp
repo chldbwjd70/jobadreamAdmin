@@ -129,7 +129,7 @@
 		
 			<div class="viewContents">${board.boardContent}</div>
 			<div class="end">
-				<a href="${contextPath}/board/boardList" class="btn btn-primary">목록으로</a>
+				<a href="javascript:history.back();" class="btn btn-primary">목록으로</a>
 				<a href="#" onclick="deleteBoard(${board.boardNo})"  class="btn btn-danger">삭제</a>
 				 <br><br><br>
 			</div>
@@ -144,7 +144,7 @@ function deleteBoard(boardNo){
              data : {"boardNo" : boardNo},
              type : "post",
              success : function(result){
-                location.href="${contextPath}/board/boardList";
+            	 location = document.referrer;
              }, error : function(){
                 console.log("ajax 통신 실패");
              }

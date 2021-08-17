@@ -67,7 +67,7 @@
           <div class="btn-group">
             <nav aria-label="...">
               <ul class="pagination pagination-sm">
-                <li class="page-item ${param.st == 1 || param.st == null ? "active" : ""}">
+                <li class="page-item ${param.st == 1  ? "active" : ""}">
                   <a  class="page-link"  href="${pageURL}?st=1">게시판</a>
                 </li>
                 <li class="page-item ${param.st == 2 ? "active" : ""}">

@@ -82,14 +82,21 @@
       .viewContents {
         margin-top: 20px;
         width: 100%;
-        height: 400px;
+        overflow-y:auto;
+        height:400px;
         border: 1px solid gainsboro;
       }
+    	.viewContents img{
+     	 	width:100%;
+      	} 
+      
       /* 버튼 */
       .end {
         margin-top: 10px;
         float: right;
       }
+      
+      
     </style>
   </head>
   <body>
@@ -113,7 +120,7 @@
           ${report.reportContent}
         </div>
         <div class="end">
-          <a href="#" onclick="checkReport(${report.reportNo})"  class="btn btn-danger">신고확인</a>
+          <a href="javascript:history.back();" onclick="checkReport(${report.reportNo})"  class="btn btn-danger">신고확인</a>
           <a href="javascript:history.back();" class="btn btn-primary">이전으로</a>
            <br><br><br>
         </div>
@@ -130,6 +137,7 @@
          data: {no: no},
          type: "post",
          success: function(){
+        	 alert("신고확인되었습니다.");
             location.href="/admin/report/reportList";
          }
       });
