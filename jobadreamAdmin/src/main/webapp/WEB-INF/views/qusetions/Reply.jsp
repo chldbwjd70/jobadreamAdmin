@@ -79,7 +79,7 @@
                 </form>
                 <div class="end">
                    <button class="btn btn-primary" id="addReply" onclick="addReply();">답변등록</button>
-                    <a href="${contextPath}/qusetions/qusetionsList" class="btn btn-danger">이전으로</a>
+                    <a href="javascript:history.back();" class="btn btn-danger">이전으로</a>
                 </div>
             </div>
        

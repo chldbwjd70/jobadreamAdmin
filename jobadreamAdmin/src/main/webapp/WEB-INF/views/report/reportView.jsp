@@ -114,10 +114,13 @@
         </div>
         <div class="end">
           <a href="#" onclick="checkReport(${report.reportNo})"  class="btn btn-danger">신고확인</a>
-          <a href="${contextPath}/report/reportList" class="btn btn-primary">이전으로</a>
+          <a href="javascript:history.back();" class="btn btn-primary">이전으로</a>
+           <br><br><br>
         </div>
       </div>
+     
     </div>
+    
     
     <!--신고확인 -->
    <script>

@@ -131,6 +131,7 @@
 			<div class="end">
 				<a href="${contextPath}/board/boardList" class="btn btn-primary">목록으로</a>
 				<a href="#" onclick="deleteBoard(${board.boardNo})"  class="btn btn-danger">삭제</a>
+				 <br><br><br>
 			</div>
 		</div>
 <script>

@@ -120,9 +120,9 @@
            					<c:if test="${member.memberStatus == 'Y'}">
 								<button type="button" class="btn btn-danger btn-sm" onclick="updateStatus(${member.memberNo}, 'S');">정지</button>
 							</c:if>
-							<c:if test="${member.memberStatus == 'N'}">
+							<%-- <c:if test="${member.memberStatus == 'N'}">
 								<button type="button" class="btn btn-danger btn-sm" onclick="updateStatus(${member.memberNo}, 'S');">정지</button>
-							</c:if>
+							</c:if> --%>
 								<c:if test="${member.memberStatus == 'S'}">
 								<button type="button" class="btn btn-danger btn-sm" onclick="updateStatus(${member.memberNo}, 'N');">탈퇴</button>
 							</c:if>
@@ -137,46 +137,58 @@
         </div>
         <!-- 목록리스트 끝 -->
      <%---------------------- Pagination start----------------------%>
+		 <%---------------------- Pagination start----------------------%>
 			<%-- 페이징 처리 시 주소를 쉽게 작성할 수 있도록 필요한 변수를 미리 선언 --%>
-			
-			<c:set var="prev" value="${pageURL}?cp=${pagination.prevPage}${searchStr}" />
-			<c:set var="next" value="${pageURL}?cp=${pagination.nextPage}${searchStr}" />
-			
-			
+
+    <c:set var="pageURL" value="memberList" />
+	<c:set var="st" value="&st=${ param.st}" />
+			<c:set var="prev"
+				value="${pageURL}?cp=${pagination.prevPage}${st}" />
+			<c:set var="next"
+				value="${pageURL}?cp=${pagination.nextPage}${st}" />
+
+
 			<div class="my-5">
 				<ul class="pagination">
-				
+
 					<%-- 현재 페이지가 10페이지 초과인 경우 --%>
 					<c:if test="${pagination.currentPage > pagination.pageSize }">
 						<li><a class="page-link" href="${prev}">&lt;&lt;</a></li>
 					</c:if>
-					
+
 					<%-- 현재 페이지가 2페이지 초과인 경우 --%>
 					<c:if test="${pagination.currentPage > 2 }">
-						<li><a class="page-link" href="${pageURL}?cp=${pagination.currentPage - 1}${searchStr}">&lt;</a></li>
+						<li><a class="page-link"
+							href="${pageURL}?cp=${pagination.currentPage - 1}${st}">&lt;</a></li>
 					</c:if>
-					
+
+
+
 					<%-- 페이지 목록 --%>
-					<c:forEach var="p" begin="${pagination.startPage}" end="${pagination.endPage}">
-						
-							<c:choose>
-								<c:when test="${p == pagination.currentPage }">
-									<li class="page-item active"><a class="page-link">${p}</a></li>
-								</c:when>
-								
-								<c:otherwise>
-									<li><a class="page-link" href="${pageURL}?cp=${p}${searchStr}">${p}</a></li>
-								</c:otherwise>
-							</c:choose>						
+					<c:forEach var="p" begin="${pagination.startPage}"
+						end="${pagination.endPage}">
+
+						<c:choose>
+							<c:when test="${p == pagination.currentPage }">
+								<li class="page-item active"><a class="page-link">${p}</a></li>
+							</c:when>
+
+							<c:otherwise>
+								<li><a class="page-link"
+									href="${pageURL}?cp=${p}${st}">${p}</a></li>
+							</c:otherwise>
+						</c:choose>
 					</c:forEach>
-					
+
 					<%-- 현재 페이지가 마지막 페이지 미만인 경우 --%>
 					<c:if test="${pagination.currentPage < pagination.maxPage }">
-						<li><a class="page-link" href="${pageURL}?cp=${pagination.currentPage + 1}${searchStr}">&gt;</a></li>
+						<li><a class="page-link"
+							href="${pageURL}?cp=${pagination.currentPage + 1}${st}">&gt;</a></li>
 					</c:if>
-					
+
 					<%-- 현재 페이지가 마지막 페이지가 아닌 경우 --%>
-					<c:if test="${pagination.currentPage - pagination.maxPage + pagination.pageSize < 0}">
+					<c:if
+						test="${pagination.currentPage - pagination.maxPage + pagination.pageSize < 0}">
 						<li><a class="page-link" href="${next}">&gt;&gt;</a></li>
 					</c:if>
 
