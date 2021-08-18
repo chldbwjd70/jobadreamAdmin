@@ -118,19 +118,7 @@
 			<%-- --%>
 			<div class="two-t6" id="t-t6">작성자 : ${qusetions.memberId}</div>
 			<%-- --%>
-			<div class="two-t7" id="t-t7">작성일 : 
-			<fmt:formatDate var="qusetionsDt" value="${qusetions.qusetionsDt}" pattern="yyyy-MM-dd" /> 
-			<fmt:formatDate var="today" value="<%=new java.util.Date()%>" pattern="yyyy-MM-dd" />
-			<c:choose>
-					<%-- 글 작성일이 오늘이 아닐 경우 --%>
-					<c:when test="${qusetionsDt != today}">
-					${qusetionsDt}
-					</c:when>
-					<%-- 글 작성일이 오늘일 경우 --%>
-					<c:otherwise>
-						<fmt:formatDate value="${qusetions.qusetionsDt}" pattern="HH:mm" />
-					</c:otherwise>
-			</c:choose></div>
+			<div class="two-t7" id="t-t7">작성일 : ${qusetions.qusetionsDt}</div>
 			<%-- --%>
 			<div class="viewContents">${qusetions.qusetionsContent}</div>
 		<jsp:include page="../qusetions/Reply.jsp"/>
